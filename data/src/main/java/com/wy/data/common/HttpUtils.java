@@ -8,7 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class HttpUtils {
 	public static void main(String[] args) throws UnirestException, IOException {
-		HttpResponse<String> response = get("http://cnsrq.99114.com");
+		HttpResponse<String> response = get("http://www.baidu.com");
 		System.out.println(response.getBody().length());
 		System.out.println(response.getRawBody().available());
 	}
