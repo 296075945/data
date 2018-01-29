@@ -20,20 +20,21 @@ import com.wy.data.common.HttpUtils;
  */
 public class DataGet {
 	public static void main(String[] args) throws IOException {
-		URL url = get("https://www.99114.com");
-		for(String s : url.links){
-			try{
-				URL u =get(s);
+		URL url = get("http://www.qq.com/");
+		for (String s : url.links) {
+			try {
+				URL u = get(s);
 				add(u);
-			}catch(Exception e){
-				
+			} catch (Exception e) {
+
 			}
-			
+
 		}
-//		add(url);
+		// add(url);
 		ESRestClient.client().close();
 	}
-	public static URL get(String url){
+
+	public static URL get(String url) {
 		URL u = new URL();
 		u.url = url;
 		try {
@@ -42,26 +43,35 @@ public class DataGet {
 			String body = response.getBody();
 			Pattern title = Pattern.compile("<title>(.*)</title>");
 			Matcher m = title.matcher(body);
-			if(m.find()){
+			if (m.find()) {
 				u.title = m.group(1);
 			}
 			Pattern links = Pattern.compile("<a.*href=\"(.*?)\".*>(.*)</a>");
 			Matcher m2 = links.matcher(body);
-			Set<String> set  = new HashSet<String>();
-			while(m2.find()){
+			Set<String> set = new HashSet<String>();
+			while (m2.find()) {
 				set.add(m2.group(1));
 			}
 			u.links = set;
 		} catch (UnirestException e) {
-			u.status = -1; 
+			u.status = -1;
 			e.printStackTrace();
 		}
 		return u;
 	}
-	public static void add(URL url){
+
+	static final class Run implements Runnable {
+
+		public void run() {
+
+		}
+
+	}
+
+	public static void add(URL url) {
 		System.out.println(JSON.toJSONString(url));
-		String s =ESRestClient.postAsJson("url/doc", JSON.toJSONString(url));
+		String s = ESRestClient.postAsJson("url/doc", JSON.toJSONString(url));
 		System.out.println(s);
-		
+
 	}
 }

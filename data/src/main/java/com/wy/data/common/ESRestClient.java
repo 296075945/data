@@ -18,7 +18,8 @@ import org.elasticsearch.client.Response;
  */
 public class ESRestClient {
 	
-	private static String ES_SERVER_IP = "192.168.1.252";
+//	private static String ES_SERVER_IP = "192.168.1.252";
+	private static String ES_SERVER_IP = "localhost";
 	
 	private static org.elasticsearch.client.RestClient client = org.elasticsearch.client.RestClient
 			.builder(new HttpHost(ES_SERVER_IP, 9200, "http")).build();
